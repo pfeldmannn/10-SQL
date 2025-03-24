@@ -10,11 +10,13 @@ In the terminal type:
 1. psql -U postgres
 2. \i db/schema.sql;
 3. \i db/seeds.sql;
-4. npm run start
-
+4. quit;
+5. npm run start
 
 ## Usage 
 Here is a walkthrough video on how to use this application.
+
+https://drive.google.com/file/d/1ZgXBeKaPIZhs-BGBZP0YRBS10pWJetMe/view?usp=drive_link 
 
 ## Credits
 - Tutoring Session for code review
