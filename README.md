@@ -1,6 +1,7 @@
 # 10-SQL
 
 ## Description
+I created a command-line application using Node.js, Inquirer, and PostgresSQL to manage a company's employee database. The application enables users to view a list of all departments, roles, and employees, as well as add new entries. Additionally, it allows the user to update an employee's role. 
 
 ## Installation
 To install this project on your local machine follow these steps:

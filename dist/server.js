@@ -2,6 +2,7 @@ import inquirer from "inquirer";
 import { pool, connectToDb } from "./connection.js";
 import "console.table";
 await connectToDb();
+//prompt the user
 const init = () => {
     inquirer
         .prompt([
@@ -22,6 +23,7 @@ const init = () => {
         },
     ])
         .then((res) => {
+        //view all departments (names and ids)
         const { action } = res;
         if (action === "View all departments") {
             pool.query(`SELECT * FROM department`, (err, result) => {
@@ -33,6 +35,7 @@ const init = () => {
                     init();
                 }
             });
+            //view all roles (job title, role id, the department that role belongs to, and the salary for that role)
         }
         else if (action === "View all roles") {
             pool.query(`SELECT r.title, r.id, r.salary, d.name as department from role r LEFT JOIN department d ON r.department_id = d.id;`, (err, result) => {
@@ -44,6 +47,7 @@ const init = () => {
                     init();
                 }
             });
+            // view all employees (employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to)
         }
         else if (action === "View all employees") {
             pool.query(`SELECT e.id, e.first_name, e.last_name, r.title as position, r.salary, d.name as department, CONCAT(m.first_name, ' ', m.last_name) as manager from employee e LEFT JOIN role r ON e.role_id = r.id LEFT JOIN department d ON r.department_id = d.id LEFT JOIN employee m ON e.manager_id = m.id;`, (err, result) => {
@@ -55,6 +59,7 @@ const init = () => {
                     init();
                 }
             });
+            // add a department (prompted to enter name of department then that department is added to the database)
         }
         else if (action === "Add a department") {
             inquirer
@@ -78,6 +83,7 @@ const init = () => {
                     }
                 });
             });
+            // add a role (prompted to enter name, salary, and department for the role and that role is added to the database)
         }
         else if (action === "Add a role") {
             pool.query(`SELECT * FROM department`, (err, result) => {
@@ -123,6 +129,7 @@ const init = () => {
                     });
                 }
             });
+            // add an employee (prompted to enter employee’s first name, last name, role, and manager and that employee is added to the database)
         }
         else if (action === "Add an employee") {
             pool.query(`SELECT * FROM role`, (err, result) => {
@@ -185,6 +192,7 @@ const init = () => {
                     });
                 }
             });
+            // update an employee role (prompted to select an employee to update and their new role and this information is updated in the database)
         }
         else if (action === 'Update an employee role') {
             pool.query(`SELECT * FROM employee`, (err, result) => {
@@ -244,10 +252,3 @@ const init = () => {
     });
 };
 init();
-//view all departments (names and ids)
-//view all roles (job title, role id, the department that role belongs to, and the salary for that role)
-// view all employees (employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to)
-// add a department (prompted to enter name of department then that department is added to the database)
-// add a role (prompted to enter name, salary, and department for the role and that role is added to the database)
-// add an employee (prompted to enter employee’s first name, last name, role, and manager and that employee is added to the database)
-// update an employee role (prompted to select an employee to update and their new role and this information is updated in the database)
